@@ -1,0 +1,60 @@
+\input{common}
+
+\begin{document}
+\title{\tcode{constexpr} comparison operators for \tcode{std::array}}
+\author{
+Tristan Brindle \small(\href{mailto:tcbrindle@gmail.com}{tcbrindle@gmail.com})
+}
+\date{} %unused. Type date explicitly below.
+\maketitle
+
+\begin{tabular}{ll}
+Document Number: & D1023r0 \\
+Date: &2018-04-26 \\
+Project: & Programming Language C++ \\
+Audience: & Library Evolution Working Group
+\end{tabular}
+
+%\begin{abstract}
+%The abstract goes here.
+%\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+The interface for \tcode{std::array} was made mostly \tcode{constexpr} in C++17. However, this did not include the comparison operators,
+presumably because they are specified in terms of \tcode{std::equal()} and \tcode{std::lexicographical_compare()},
+which only recently became \tcode{constexpr} in the draft International Standard.
+
+This paper corrects this surprising omission by adding the \tcode{constexpr} keyword to the declarations of the \tcode{array}
+comparison operators.
+
+\section{Proposed wording}
+\label{sec:solution}
+
+Changes are relative to \cite{N4741}.
+
+In section 26.3.2 [array.syn], change
+
+%\begin{adjustwidth}{1cm}{1cm}
+\begin{codeblock}
+template<class T, size_t N>
+  @\added{constexpr}@ bool operator==(const array<T, N>& x, const array<T, N>& y);
+template<class T, size_t N>
+  @\added{constexpr}@ bool operator!=(const array<T, N>& x, const array<T, N>& y);
+template<class T, size_t N>
+  @\added{constexpr}@ bool operator< (const array<T, N>& x, const array<T, N>& y);
+template<class T, size_t N>
+  @\added{constexpr}@ bool operator> (const array<T, N>& x, const array<T, N>& y);
+template<class T, size_t N>
+  @\added{constexpr}@ bool operator<=(const array<T, N>& x, const array<T, N>& y);
+template<class T, size_t N>
+  @\added{constexpr}@ bool operator>=(const array<T, N>& x, const array<T, N>& y);
+\end{codeblock}
+%\end{adjustwidth}
+
+\renewcommand{\bibname}{References}
+\bibliographystyle{abstract}
+\bibliography{ref}
+
+\end{document}
